@@ -2,29 +2,16 @@ import React, { useState } from 'react'
 import ProductCard from '../components/ProductCard'
 import ProductForm from '../components/ProductForm'
 import { useCart } from '../context/CartContext'
-
-const SAMPLE = [
-  { id: 'p1', name: 'Laptop Pro', price: 1299.99, imageUrl: new URL('../assets/laptop.svg', import.meta.url).href },
-  { id: 'p2', name: 'Wireless Mouse', price: 49.99, imageUrl: new URL('../assets/mouse.svg', import.meta.url).href },
-  { id: 'p3', name: 'Mechanical Keyboard', price: 119.99, imageUrl: new URL('../assets/keyboard.svg', import.meta.url).href },
-  { id: 'p4', name: 'Headphones', price: 199.99, imageUrl: new URL('../assets/headphone.svg', import.meta.url).href }
-]
+import { useProducts } from '../context/ProductsContext'
 
 export default function ProductListPage(){
-  const [products, setProducts] = useState(SAMPLE)
+  const { products, addProduct, editProduct, deleteProduct } = useProducts()
   const [editing, setEditing] = useState(null)
   const { addToCart } = useCart()
 
-  const handleAdd = (product) => {
-    setProducts(p => [{ ...product, id: product.id || `p${Date.now()}` }, ...p])
-  }
-
-  const handleEdit = (prod) => {
-    setProducts(p => p.map(x => x.id === prod.id ? prod : x))
-    setEditing(null)
-  }
-
-  const handleDelete = (id) => setProducts(p => p.filter(x => x.id !== id))
+  const handleAdd = (product) => addProduct(product)
+  const handleEdit = (prod) => { editProduct(prod); setEditing(null) }
+  const handleDelete = (id) => deleteProduct(id)
 
   return (
     <div style={{display:'grid',gridTemplateColumns:'1fr 360px',gap:18,alignItems:'start'}}>

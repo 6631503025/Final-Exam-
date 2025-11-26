@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useProducts } from '../context/ProductsContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function CheckoutPage(){
   const { cart, total, clearCart } = useCart()
+  const { removeProductsByIds } = useProducts()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
@@ -18,6 +20,13 @@ export default function CheckoutPage(){
     }
     // simulate order
     alert(`Order placed! Total: $${total.toFixed(2)}`)
+    // remove purchased products from product list
+    try{
+      const ids = cart.map(i => i.product.id)
+      if(ids.length) removeProductsByIds(ids)
+    }catch(err){
+      console.error('Unable to remove products after purchase', err)
+    }
     clearCart()
     nav('/')
   }
