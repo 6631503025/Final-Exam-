@@ -1,0 +1,24 @@
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#2563eb;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#0f172a}
+a{color:inherit}
+
+.container{max-width:1000px;margin:24px auto;padding:0 16px}
+
+h2{margin:0 0 12px 0}
+
+/* responsive grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+
+button{transition:all .12s ease}
+button:hover{transform:translateY(-2px)}
+
+input,textarea{font-family:inherit}
+
+/* small helpers */
+.muted{color:var(--muted)}
